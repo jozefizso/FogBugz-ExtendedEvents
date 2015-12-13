@@ -2,10 +2,10 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("FogBugz Extended Events Plugin")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Extended Events")]
+[assembly: AssemblyDescription("Show events from external sources like Subversion, TeamCity and Jenkins.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Jozef Izso")]
 [assembly: AssemblyProduct("FBExtendedEvents")]
 [assembly: AssemblyCopyright("Copyright © 2015 Jozef Izso")]
 [assembly: AssemblyTrademark("")]
