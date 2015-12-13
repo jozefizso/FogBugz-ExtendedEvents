@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>dc011599-24b0-4a15-acc5-bc3fa9a446d8</ProjectGuid>
+    <ProjectGuid>{DC011599-24B0-4A15-ACC5-BC3FA9A446D8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FBExtendedEvents</RootNamespace>
@@ -30,20 +30,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="FogBugz, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a9eb54ba6d925add, processorArchitecture=MSIL">
+      <HintPath>..\packages\FogCreek.FogBugz.Unofficial.8.8.53.0\lib\net20\FogBugz.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FogCreek.Plugins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d8367ba9769b01ac, processorArchitecture=MSIL">
+      <HintPath>..\packages\FogCreek.FogBugz.Unofficial.8.8.53.0\lib\net20\FogCreek.Plugins.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ExtendedEventsPlugin.cs" />
+    <Compile Include="PluginInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -53,5 +61,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-
- </Project>
+</Project>
