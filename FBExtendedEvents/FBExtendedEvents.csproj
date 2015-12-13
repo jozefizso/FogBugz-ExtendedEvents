@@ -57,8 +57,15 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
+  </Target
   -->
+  <Target Name="AfterBuild" Condition=" '$(FOGBUGZ_WEBSITE)' != '' ">
+    <PropertyGroup>
+      <FogBugzPluginDir>$(FOGBUGZ_WEBSITE)\plugins\upload</FogBugzPluginDir>
+    </PropertyGroup>
+    
+    <Copy SourceFiles="$(TargetPath)"
+          DestinationFolder="$(FogBugzPluginDir)"
+          Condition=" Exists('$(FogBugzPluginDir)')" />
+  </Target>
 </Project>
