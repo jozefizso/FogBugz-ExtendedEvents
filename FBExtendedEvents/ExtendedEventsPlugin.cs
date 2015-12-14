@@ -9,7 +9,7 @@ using FogCreek.FogBugz.Plugins.Interfaces;
 
 namespace FBExtendedEvents
 {
-    public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent
+    public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay
     {
         private const int DATABASE_SCHEMA_VERSION = 1;
 
@@ -57,7 +57,8 @@ namespace FBExtendedEvents
                     string sRevision = Convert.ToString(row["sRevision"]);
                     string sAuthor = Convert.ToString(row["sAuthor"]);
                     DateTime dtCommit = Convert.ToDateTime(row["dtCommit"]);
-                    string sDtCommit = this.api.TimeZone.DateTimeString(dtCommit);
+                    DateTime dtCommitClient = this.api.TimeZone.CTZFromUTC(dtCommit);
+                    string sDtCommit = this.api.TimeZone.DateTimeString(dtCommitClient);
 
                     var sHtml = $@"<div id=""bugevent_{ixCommitEvent}_commit"" class=""bugevent detailed"" style=""background-color: #dff0f7;"">
                                      <div id=""bugeventSummary_{ixCommitEvent}_pe"" class=""summary"">
@@ -73,6 +74,26 @@ namespace FBExtendedEvents
             }
 
             return commitEvents.ToArray();
+        }
+
+        public string RawPageDisplay()
+        {
+            api.Response.ContentType = "application/json";
+            var sAction = api.Request["sAction"];
+
+            if (sAction == "commit")
+            {
+                var cc = new CommitCommand(this.api);
+                var result = cc.Process();
+                return $@"{{ ""ixCommitEvent"": {result} }}";
+            }
+
+            return null;
+        }
+
+        public PermissionLevel RawPageVisibility()
+        {
+            return PermissionLevel.Normal;
         }
     }
 }

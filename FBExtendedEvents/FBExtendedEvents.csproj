@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommitCommand.cs" />
     <Compile Include="CommitEventEntity.cs" />
     <Compile Include="DatabaseHelpers.cs" />
     <Compile Include="ExtendedEventsPlugin.cs" />
