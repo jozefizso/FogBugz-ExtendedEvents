@@ -11,7 +11,7 @@ namespace FBExtendedEvents
 {
     public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginCSS
     {
-        private const int DATABASE_SCHEMA_VERSION = 1;
+        private const int DATABASE_SCHEMA_VERSION = 2;
 
         public ExtendedEventsPlugin(CPluginApi api) : base(api)
         {
@@ -57,17 +57,21 @@ namespace FBExtendedEvents
                     string sRevision = Convert.ToString(row["sRevision"]);
                     string sAuthor = Convert.ToString(row["sAuthor"]);
                     int ixPerson = Convert.ToInt32(row["ixPerson"]);
+                    string sMessage = Convert.ToString(row["sMessage"]);
+                    sMessage = sMessage.Replace("\n", "<br>\n");
+
                     DateTime dtCommit = Convert.ToDateTime(row["dtCommit"]);
                     DateTime dtCommitClient = this.api.TimeZone.CTZFromUTC(dtCommit);
                     string sDtCommit = this.api.TimeZone.DateTimeString(dtCommitClient);
 
-                    var sMessage = $"Commit r{sRevision} by";
+                    //var sTitle = $"Commited revision {sRevision} by";
+                    var sTitle = $"Revision {sRevision} commited by";
                     if (ixPerson == 0)
                     {
-                        sMessage += " " + sAuthor;
+                        sTitle += " " + sAuthor;
                     }
 
-                    var sHtml = this.api.UI.BugEvent(dtCommit, ixPerson, sMessage, null, null, "fbee-commit");
+                    var sHtml = this.api.UI.BugEvent(dtCommit, ixPerson, sTitle, sMessage, null, "fbee-commit");
                     var evt = new CPseudoBugEvent(dtCommit, sHtml);
                     commitEvents.Add(evt);
                 }
@@ -99,7 +103,8 @@ namespace FBExtendedEvents
         public CCSSInfo CSSInfo()
         {
             var css = new CCSSInfo();
-            css.sInlineCSS = "#bugviewContainer .bugevents .pseudobugevent.fbee-commit { background-color: #dff0f7; }";
+            css.sInlineCSS = "#bugviewContainer .bugevents .pseudobugevent.fbee-commit { background-color: #dff0f7; } ";
+            css.sInlineCSS += "#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-commit .body { color: #5a5f66; font-size: 11px; line-height: 15px; } ";
             return css;
         }
     }

@@ -21,6 +21,7 @@ namespace FBExtendedEvents
             var dtCommit = req.GetDateTime("dtCommit", DateTime.MinValue.ToUniversalTime());
             var sAuthor = req.GetString("sAuthor", "");
             var ixBug = req.GetInt32("ixBug", 0);
+            var sMessage = req.GetString("sMessage", "");
             var ixPerson = this.TryLoadPersonId(sAuthor);
 
             var entity = new CommitEventEntity
@@ -30,7 +31,8 @@ namespace FBExtendedEvents
                 dtCommit = dtCommit,
                 ixBug = ixBug,
                 sAuthor = sAuthor,
-                ixPerson = ixPerson
+                ixPerson = ixPerson,
+                sMessage = sMessage
             };
 
             var ixCommitEvent = entity.Save(this.api.Database);

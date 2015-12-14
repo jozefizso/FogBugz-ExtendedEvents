@@ -22,6 +22,8 @@ namespace FBExtendedEvents
 
         public int ixBug { get; set; }
 
+        public string sMessage { get; set; }
+
         public int Save(CDatabaseApi db)
         {
             var qInsert = db.NewInsertQuery(GetPluginTableName(db));
@@ -32,6 +34,7 @@ namespace FBExtendedEvents
             qInsert.InsertString("sAuthor", this.sAuthor);
             qInsert.InsertInt("ixPerson", this.ixPerson);
             qInsert.InsertInt("ixBug", this.ixBug);
+            qInsert.InsertString("sMessage", this.sMessage);
 
             return qInsert.Execute();
         }
@@ -49,6 +52,7 @@ namespace FBExtendedEvents
             tblCommitEvents.AddVarcharColumn("sAuthor", 50, false, null, "Committer name.");
             tblCommitEvents.AddIntColumn("ixPerson", true, 0, "FogBugz Person entity identifier in case the sAuthor field was matched with a person.");
             tblCommitEvents.AddIntColumn("ixBug", true, 0, "FogBugz Bug entity identifier.");
+            tblCommitEvents.AddTextColumn("sMessage", "Commit message.");
 
             tblCommitEvents.AddTableIndex("IX_ixBug", "ixBug", "Index to retrieve events by ixBug efficiently.");
 
