@@ -9,7 +9,7 @@ using FogCreek.FogBugz.Plugins.Interfaces;
 
 namespace FBExtendedEvents
 {
-    public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay
+    public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginCSS
     {
         private const int DATABASE_SCHEMA_VERSION = 1;
 
@@ -56,18 +56,18 @@ namespace FBExtendedEvents
                     int ixCommitEvent = Convert.ToInt32(row["ixCommitEvent"]);
                     string sRevision = Convert.ToString(row["sRevision"]);
                     string sAuthor = Convert.ToString(row["sAuthor"]);
+                    int ixPerson = Convert.ToInt32(row["ixPerson"]);
                     DateTime dtCommit = Convert.ToDateTime(row["dtCommit"]);
                     DateTime dtCommitClient = this.api.TimeZone.CTZFromUTC(dtCommit);
                     string sDtCommit = this.api.TimeZone.DateTimeString(dtCommitClient);
 
-                    var sHtml = $@"<div id=""bugevent_{ixCommitEvent}_commit"" class=""bugevent detailed"" style=""background-color: #dff0f7;"">
-                                     <div id=""bugeventSummary_{ixCommitEvent}_pe"" class=""summary"">
-                                       <span class=""action"">Commit r{sRevision} by {sAuthor}</span>&nbsp;" +
-                                    $@"<span class=""date"" dir=""ltr"">{sDtCommit}</a></span>
-                                     </div>
-                                     <div id=""bugeventChanges_{ixCommitEvent}_pe"" class=""changes"" dir=""ltr""></div>
-                                   </div>";
+                    var sMessage = $"Commit r{sRevision} by";
+                    if (ixPerson == 0)
+                    {
+                        sMessage += " " + sAuthor;
+                    }
 
+                    var sHtml = this.api.UI.BugEvent(dtCommit, ixPerson, sMessage, null, null, "fbee-commit");
                     var evt = new CPseudoBugEvent(dtCommit, sHtml);
                     commitEvents.Add(evt);
                 }
@@ -94,6 +94,13 @@ namespace FBExtendedEvents
         public PermissionLevel RawPageVisibility()
         {
             return PermissionLevel.Normal;
+        }
+
+        public CCSSInfo CSSInfo()
+        {
+            var css = new CCSSInfo();
+            css.sInlineCSS = "#bugviewContainer .bugevents .pseudobugevent.fbee-commit { background-color: #dff0f7; }";
+            return css;
         }
     }
 }
