@@ -21,6 +21,7 @@ namespace FBExtendedEvents
             string sHTML = "";
             sHTML += GetHeader();
             sHTML += GetForm();
+            sHTML += GetFooter();
             return sHTML;
         }
 
@@ -44,6 +45,13 @@ namespace FBExtendedEvents
                 Forms.SubmitButton("btnRequestToken", "Create API Token")
                 );
 
+        }
+
+        protected string GetFooter()
+        {
+            return String.Format(
+                @"<p>Handler URL: <code>{0}</code></p>",
+                api.Url.BaseUrl() + UrlEx.PluginRawPageUrl("FBExtendedEvents@goit.io"));
         }
     }
 }
