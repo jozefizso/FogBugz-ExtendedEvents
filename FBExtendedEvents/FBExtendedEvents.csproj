@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="CommitCommand.cs" />
     <Compile Include="CommitEventEntity.cs" />
+    <Compile Include="PluginConfigPageDisplay.cs" />
     <Compile Include="DatabaseHelpers.cs" />
     <Compile Include="ExtendedEventsPlugin.cs" />
     <Compile Include="ExtensionAttribute.cs" />
