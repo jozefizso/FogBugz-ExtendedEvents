@@ -40,7 +40,7 @@ namespace FBExtendedEvents
                   <p>Request token: {2}</p>
                   <p>New token value: <strong id=""lblToken""></strong></p>",
                 Forms.TextInput("username", ""),
-                Forms.TextInput("password", ""),
+                FormsEx.PasswordInput("password", ""),
                 Forms.SubmitButton("btnRequestToken", "Create API Token")
                 );
 
