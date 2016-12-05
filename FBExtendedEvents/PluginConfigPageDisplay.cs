@@ -28,15 +28,22 @@ namespace FBExtendedEvents
         {
             return String.Format(
                 @"<p>{0}</p>
-                  <p>Request token: {1}</p>",
-
-                PageDisplay.Headline("FogBugz Extended Events"),
-                Forms.SubmitButton("btnRequestToken", "Create API Token"));
+                  <p>Request new API token:</p>",
+                PageDisplay.Headline("FogBugz Extended Events"));
         }
 
         protected string GetForm()
         {
-            return "";
+            return String.Format(
+                @"<p>Username: {0}</p>
+                  <p>Password: {1}</p>
+                  <p>Request token: {2}</p>
+                  <p>New token value: <strong id=""lblToken""></strong></p>",
+                Forms.TextInput("username", ""),
+                Forms.TextInput("password", ""),
+                Forms.SubmitButton("btnRequestToken", "Create API Token")
+                );
+
         }
     }
 }

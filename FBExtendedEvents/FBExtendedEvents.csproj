@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageTargetPath>$(OutputPath)$(AssemblyName).zip</PackageTargetPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FogBugz, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a9eb54ba6d925add, processorArchitecture=MSIL">
@@ -60,16 +65,37 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="static\js\ExtendedEvents.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target
   -->
-  <Target Name="AfterBuild" Condition=" '$(FOGBUGZ_WEBSITE)' != '' ">
+  <Target Name="AfterBuild" Condition=" '$(FOGBUGZ_WEBSITE)' != '' " DependsOnTargets="PackageBinaries">
     <PropertyGroup>
       <FogBugzPluginDir>$(FOGBUGZ_WEBSITE)\plugins\upload</FogBugzPluginDir>
     </PropertyGroup>
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(FogBugzPluginDir)" Condition=" Exists('$(FogBugzPluginDir)')" />
+    <Copy SourceFiles="$(PackageTargetPath)" DestinationFolder="$(FogBugzPluginDir)" Condition=" Exists('$(FogBugzPluginDir)')" />
+  </Target>
+  <Target Name="PackageBinaries" Inputs="@(BuildArtifacts)" Outputs="$(PackageTargetPath)" DependsOnTargets="PrepareArtifacts">
+    <Message Text="Creating plugin package '$(PackageTargetName)'..." />
+    <Zip ZipFileName="$(PackageTargetPath)" WorkingDirectory="$(OutputPath)" Files="@(BuildArtifacts)" ParallelCompression="false" />
+  </Target>
+  <Target Name="PrepareArtifacts">
+    <CreateItem Include="$(OutputPath)**" Exclude="$(OutputPath)*.zip">
+      <Output TaskParameter="Include" ItemName="BuildArtifacts" />
+    </CreateItem>
+  </Target>
+  <Import Project="..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets'))" />
   </Target>
 </Project>

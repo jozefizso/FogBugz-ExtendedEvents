@@ -9,7 +9,7 @@ using FogCreek.FogBugz.Plugins.Interfaces;
 
 namespace FBExtendedEvents
 {
-    public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginConfigPageDisplay, IPluginCSS
+    public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginConfigPageDisplay, IPluginCSS, IPluginJS
     {
         private const int DATABASE_SCHEMA_VERSION = 2;
 
@@ -107,6 +107,13 @@ namespace FBExtendedEvents
             css.sInlineCSS += "#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-commit .body { color: #5a5f66; font-size: 11px; line-height: 15px; } ";
             css.sInlineCSS += ".dlgButton { width: auto } ";
             return css;
+        }
+
+        public CJSInfo JSInfo()
+        {
+            var js = new CJSInfo();
+            js.rgsStaticFiles = new[] { @"js\ExtendedEvents.js" };
+            return js;
         }
 
         private PluginConfigPageDisplay configPage;
