@@ -23,6 +23,7 @@ namespace FBExtendedEvents
             var sMessage = req.GetString("sMessage", "");
             var sExternalUrl = req.GetString("sExternalUrl", "");
             var sCommitRevision = req.GetString("sCommitRevision", "");
+            var sBuildName = req.GetString("sBuildName", "");
 
             var ixPerson = this.TryLoadPersonId(sPersonName);
 
@@ -35,7 +36,8 @@ namespace FBExtendedEvents
                 sPersonName = sPersonName,
                 sMessage = sMessage,
                 sExternalUrl = sExternalUrl,
-                sCommitRevision = sCommitRevision
+                sCommitRevision = sCommitRevision,
+                sBuildName = sBuildName
             };
 
             var ixCommitEvent = entity.Save(this.api.Database);

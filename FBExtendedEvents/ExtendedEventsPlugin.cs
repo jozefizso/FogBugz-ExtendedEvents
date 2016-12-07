@@ -11,7 +11,7 @@ namespace FBExtendedEvents
 {
     public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginConfigPageDisplay, IPluginCSS, IPluginJS
     {
-        private const int DATABASE_SCHEMA_VERSION = 3;
+        private const int DATABASE_SCHEMA_VERSION = 4;
 
         public ExtendedEventsPlugin(CPluginApi api) : base(api)
         {

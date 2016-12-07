@@ -27,11 +27,12 @@ namespace FBExtendedEvents
 
         public string sCommitRevision { get; set; }
 
+        public string sBuildName { get; set; }
+
         public int Save(CDatabaseApi db)
         {
             var qInsert = db.NewInsertQuery(GetPluginTableName(db));
 
-            qInsert.InsertInt("ixExtendedEvent", this.ixExtendedEvent);
             qInsert.InsertInt("ixBug", this.ixBug);
             qInsert.InsertString("sEventType", this.sEventType);
             qInsert.InsertDate("dtEventUtc", this.dtEventUtc);
@@ -40,6 +41,7 @@ namespace FBExtendedEvents
             qInsert.InsertString("sMessage", this.sMessage);
             qInsert.InsertString("sExternalUrl", this.sExternalUrl);
             qInsert.InsertString("sCommitRevision", this.sCommitRevision);
+            qInsert.InsertString("sBuildName", this.sBuildName);
 
             return qInsert.Execute();
         }
@@ -60,6 +62,7 @@ namespace FBExtendedEvents
             tblExtendedEvents.AddTextColumn("sMessage", "Event detailed message.");
             tblExtendedEvents.AddTextColumn("sExternalUrl", "Link to the event in external system that generated the event.");
             tblExtendedEvents.AddVarcharColumn("sCommitRevision", 255, false, null, "Revision number or text from Subversion, Git or other CVS system.");
+            tblExtendedEvents.AddVarcharColumn("sBuildName", 255, false, null, "Build name from TeamCity or Jenkins.");
 
             tblExtendedEvents.AddTableIndex("IX_ixBug", "ixBug", "Index to retrieve events by ixBug efficiently.");
             tblExtendedEvents.AddTableIndex("IX_dtEventUtc", "dtEventUtc", "Index to retrieve events by date efficiently.");
