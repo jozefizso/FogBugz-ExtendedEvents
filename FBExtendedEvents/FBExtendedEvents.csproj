@@ -67,7 +67,12 @@
     <Compile Include="UrlEx.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="packages.config" />
+    <None Include="static\css\FBExtendedEvents.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="static\css\FBExtendedEvents.css">

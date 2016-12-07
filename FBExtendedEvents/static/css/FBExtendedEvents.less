@@ -1,0 +1,25 @@
+﻿/* FBExtendedEvents CSS */
+@import "for";
+
+@events: commit, build-success, build-failure, releasenote;
+
+#bugviewContainer .bugevents .pseudobugevent {
+    &.fbee-commit { background-color: #dff0f7; }
+    &.fbee-build-success { background-color: #bbe0bd; }
+    &.fbee-build-failure { background-color: #FFCDCB; }
+    &.fbee-releasenote { background-color: #FFDC81; }
+}
+
+
+.for(@events); .-each(@name) {
+    #bugviewContainer .bugevents .pseudobugevent.detailed.fbee-@{name} .body {
+        color: #5a5f66;
+        font-size: 11px;
+        line-height: 15px;
+    }
+}
+
+
+.FBExtendedEvents .dlgButton {
+  width: auto;
+}

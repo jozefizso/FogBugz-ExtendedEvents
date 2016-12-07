@@ -1,13 +1,36 @@
 ﻿/* FBExtendedEvents CSS */
-
 #bugviewContainer .bugevents .pseudobugevent.fbee-commit {
   background-color: #dff0f7;
 }
-
-#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-commit .body {
-  color: #5a5f66; font-size: 11px; line-height: 15px;
+#bugviewContainer .bugevents .pseudobugevent.fbee-build-success {
+  background-color: #bbe0bd;
 }
-
+#bugviewContainer .bugevents .pseudobugevent.fbee-build-failure {
+  background-color: #FFCDCB;
+}
+#bugviewContainer .bugevents .pseudobugevent.fbee-releasenote {
+  background-color: #FFDC81;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-commit .body {
+  color: #5a5f66;
+  font-size: 11px;
+  line-height: 15px;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-build-success .body {
+  color: #5a5f66;
+  font-size: 11px;
+  line-height: 15px;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-build-failure .body {
+  color: #5a5f66;
+  font-size: 11px;
+  line-height: 15px;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-releasenote .body {
+  color: #5a5f66;
+  font-size: 11px;
+  line-height: 15px;
+}
 .FBExtendedEvents .dlgButton {
   width: auto;
 }

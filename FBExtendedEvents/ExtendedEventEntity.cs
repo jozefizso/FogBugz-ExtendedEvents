@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using FogCreek.FogBugz;
 using FogCreek.FogBugz.Plugins.Api;
 
@@ -44,6 +45,40 @@ namespace FBExtendedEvents
             qInsert.InsertString("sBuildName", this.sBuildName);
 
             return qInsert.Execute();
+        }
+
+        public void Load(DataRow row)
+        {
+            this.ixExtendedEvent = Convert.ToInt32(row["ixExtendedEvent"]);
+            this.ixBug = Convert.ToInt32(row["ixBug"]);
+            this.sEventType = Convert.ToString(row["sEventType"]);
+            this.dtEventUtc = Convert.ToDateTime(row["dtEventUtc"]);
+            this.sPersonName = Convert.ToString(row["sPersonName"]);
+            this.sMessage = Convert.ToString(row["sMessage"]);
+            this.sExternalUrl = Convert.ToString(row["sExternalUrl"]);
+            this.sCommitRevision = Convert.ToString(row["sCommitRevision"]);
+            this.sBuildName = Convert.ToString(row["sBuildName"]);
+        }
+
+        public static IEnumerable<ExtendedEventEntity> QueryEvents(CDatabaseApi db, int ixBug)
+        {
+            var selectQuery = db.NewSelectQuery(ExtendedEventEntity.GetPluginTableName(db));
+            selectQuery.AddSelect("*");
+            selectQuery.AddWhere("ixBug = @ixBug");
+            selectQuery.SetParamInt("@ixBug", ixBug);
+
+
+            var ds = selectQuery.GetDataSet();
+            if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    var entity = new ExtendedEventEntity();
+                    entity.Load(row);
+
+                    yield return entity;
+                }
+            }
         }
 
         public static CTable TableDefinition(CDatabaseApi db)

@@ -42,43 +42,30 @@ namespace FBExtendedEvents
         {
             int ixBug = bug.ixBug;
 
-            var selectQuery = this.api.Database.NewSelectQuery(CommitEventEntity.GetPluginTableName(this.api.Database));
-            selectQuery.AddSelect("*");
-            selectQuery.AddWhere("ixBug = @ixBug");
-            selectQuery.SetParamInt("@ixBug", ixBug);
+            var query = ExtendedEventEntity.QueryEvents(this.api.Database, ixBug);
 
-            var commitEvents = new List<CPseudoBugEvent>();
+            var events = new List<CPseudoBugEvent>();
 
-            var ds = selectQuery.GetDataSet();
-            if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+            foreach (var entity in query)
             {
-                foreach (DataRow row in ds.Tables[0].Rows)
+                string sMessage = entity.sMessage;
+                sMessage = sMessage.Replace("\n", "<br>\n");
+
+                DateTime dtEventLocal = this.api.TimeZone.CTZFromUTC(entity.dtEventUtc);
+
+                //var sTitle = $"Commited revision {sRevision} by";
+                var sTitle = $"Event {entity.sEventType} by";
+                if (entity.ixPerson == 0 && String.IsNullOrEmpty(entity.sPersonName))
                 {
-                    int ixCommitEvent = Convert.ToInt32(row["ixCommitEvent"]);
-                    string sRevision = Convert.ToString(row["sRevision"]);
-                    string sAuthor = Convert.ToString(row["sAuthor"]);
-                    int ixPerson = Convert.ToInt32(row["ixPerson"]);
-                    string sMessage = Convert.ToString(row["sMessage"]);
-                    sMessage = sMessage.Replace("\n", "<br>\n");
-
-                    DateTime dtCommit = Convert.ToDateTime(row["dtCommit"]);
-                    DateTime dtCommitClient = this.api.TimeZone.CTZFromUTC(dtCommit);
-                    string sDtCommit = this.api.TimeZone.DateTimeString(dtCommitClient);
-
-                    //var sTitle = $"Commited revision {sRevision} by";
-                    var sTitle = $"Revision {sRevision} commited by";
-                    if (ixPerson == 0)
-                    {
-                        sTitle += " " + sAuthor;
-                    }
-
-                    var sHtml = this.api.UI.BugEvent(dtCommit, ixPerson, sTitle, sMessage, null, "fbee-commit");
-                    var evt = new CPseudoBugEvent(dtCommit, sHtml);
-                    commitEvents.Add(evt);
+                    sTitle += " " + entity.sPersonName;
                 }
+
+                var sHtml = this.api.UI.BugEvent(entity.dtEventUtc, entity.ixPerson, sTitle, sMessage, null, $"fbee-{entity.sEventType}");
+                var evt = new CPseudoBugEvent(entity.dtEventUtc, sHtml);
+                events.Add(evt);
             }
 
-            return commitEvents.ToArray();
+            return events.ToArray();
         }
 
         public string RawPageDisplay()
