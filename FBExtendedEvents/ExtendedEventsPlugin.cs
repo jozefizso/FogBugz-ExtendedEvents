@@ -93,6 +93,13 @@ namespace FBExtendedEvents
                 return $@"{{ ""ixCommitEvent"": {result} }}";
             }
 
+            if (sAction == "event")
+            {
+                var cc = new CreateEventCommand(this.api);
+                var result = cc.Process();
+                return $@"{{ ""ixExtendedEvent"": {result} }}";
+            }
+
             return null;
         }
 

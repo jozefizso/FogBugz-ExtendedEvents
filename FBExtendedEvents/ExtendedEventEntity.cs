@@ -13,7 +13,7 @@ namespace FBExtendedEvents
 
         public int ixBug { get; set; }
 
-        public int sEventType { get; set; }
+        public string sEventType { get; set; }
 
         public DateTime dtEventUtc { get; set; }
 
@@ -33,7 +33,7 @@ namespace FBExtendedEvents
 
             qInsert.InsertInt("ixExtendedEvent", this.ixExtendedEvent);
             qInsert.InsertInt("ixBug", this.ixBug);
-            qInsert.InsertInt("sEventType", this.sEventType);
+            qInsert.InsertString("sEventType", this.sEventType);
             qInsert.InsertDate("dtEventUtc", this.dtEventUtc);
             qInsert.InsertInt("ixPerson", this.ixPerson);
             qInsert.InsertString("sPersonName", this.sPersonName);
@@ -53,7 +53,7 @@ namespace FBExtendedEvents
             tblExtendedEvents.AddAutoIncrementPrimaryKey("ixExtendedEvent");
 
             tblExtendedEvents.AddIntColumn("ixBug", true, 0, "FogBugz Bug entity identifier.");
-            tblExtendedEvents.AddIntColumn("sEventType", true, 0, "Extended event type name.");
+            tblExtendedEvents.AddVarcharColumn("sEventType", 50, true, "Extended event type name.");
             tblExtendedEvents.AddDateColumn("dtEventUtc", false, "Date and time of the event in UTC timezone.");
             tblExtendedEvents.AddIntColumn("ixPerson", false, 0, "FogBugz Person entity identifier in case the sAuthor field was matched with a person.");
             tblExtendedEvents.AddVarcharColumn("sPersonName", 50, false, null, "Event author name.");
