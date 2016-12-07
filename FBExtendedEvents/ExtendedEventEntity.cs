@@ -53,6 +53,7 @@ namespace FBExtendedEvents
             this.ixBug = Convert.ToInt32(row["ixBug"]);
             this.sEventType = Convert.ToString(row["sEventType"]);
             this.dtEventUtc = Convert.ToDateTime(row["dtEventUtc"]);
+            this.ixPerson = Convert.ToInt32(row["ixPerson"]);
             this.sPersonName = Convert.ToString(row["sPersonName"]);
             this.sMessage = Convert.ToString(row["sMessage"]);
             this.sExternalUrl = Convert.ToString(row["sExternalUrl"]);
