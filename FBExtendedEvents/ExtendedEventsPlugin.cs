@@ -11,7 +11,7 @@ namespace FBExtendedEvents
 {
     public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginConfigPageDisplay, IPluginCSS, IPluginJS
     {
-        private const int DATABASE_SCHEMA_VERSION = 4;
+        private const int DATABASE_SCHEMA_VERSION = 5;
 
         public ExtendedEventsPlugin(CPluginApi api) : base(api)
         {
@@ -24,10 +24,9 @@ namespace FBExtendedEvents
 
         public CTable[] DatabaseSchema()
         {
-            var tblCommitEvents = CommitEventEntity.TableDefinition(this.api.Database);
             var tblExtendedEvents = ExtendedEventEntity.TableDefinition(this.api.Database);
 
-            return new[] { tblCommitEvents, tblExtendedEvents };
+            return new[] { tblExtendedEvents };
         }
 
         public void DatabaseUpgradeBefore(int ixVersionFrom, int ixVersionTo, CDatabaseUpgradeApi apiUpgrade)
@@ -85,13 +84,6 @@ namespace FBExtendedEvents
         {
             api.Response.ContentType = "application/json";
             var sAction = api.Request["sAction"];
-
-            if (sAction == "commit")
-            {
-                var cc = new CommitCommand(this.api);
-                var result = cc.Process();
-                return $@"{{ ""ixCommitEvent"": {result} }}";
-            }
 
             if (sAction == "event")
             {

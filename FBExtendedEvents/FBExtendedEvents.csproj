@@ -53,8 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateEventCommand.cs" />
-    <Compile Include="CommitCommand.cs" />
-    <Compile Include="CommitEventEntity.cs" />
     <Compile Include="ExtendedEventEntity.cs" />
     <Compile Include="FormsEx.cs" />
     <Compile Include="PluginConfigPageDisplay.cs" />
