@@ -17,13 +17,13 @@ namespace FBExtendedEvents
             var req = this.api.Request;
 
             var ixBug = req.GetInt32("ixBug", 0);
-            var sEventType = req.GetString("sEventType", "");
+            var sEventType = req.GetString("sEventType", "none");
             var dtEventUtc = req.GetDateTime("dtEventUtc", DateTime.MinValue.ToUniversalTime());
-            var sPersonName = req.GetString("sPersonName", "");
-            var sMessage = req.GetString("sMessage", "");
-            var sExternalUrl = req.GetString("sExternalUrl", "");
-            var sCommitRevision = req.GetString("sCommitRevision", "");
-            var sBuildName = req.GetString("sBuildName", "");
+            var sPersonName = req.GetString("sPersonName", null);
+            var sMessage = req.GetString("sMessage", null);
+            var sExternalUrl = req.GetString("sExternalUrl", null);
+            var sCommitRevision = req.GetString("sCommitRevision", null);
+            var sBuildName = req.GetString("sBuildName", null);
 
             var ixPerson = this.TryLoadPersonId(sPersonName);
 
@@ -46,6 +46,11 @@ namespace FBExtendedEvents
 
         private int TryLoadPersonId(string sAuthor)
         {
+            if (String.IsNullOrEmpty(sAuthor))
+            {
+                return 0;
+            }
+
             var q = this.api.Person.NewPersonQuery();
             q.IgnorePermissions = true;
             q.AddSuffixLike("sLDAPUid", @"\" + sAuthor);
