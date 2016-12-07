@@ -52,7 +52,6 @@ namespace FBExtendedEvents
             tblExtendedEvents.sDesc = "List of extended events from external systems integrated with FogBugz.";
             tblExtendedEvents.AddAutoIncrementPrimaryKey("ixExtendedEvent");
 
-            tblExtendedEvents.AddIntColumn("ixExtendedEvent", true, 0, "Entity identifier.");
             tblExtendedEvents.AddIntColumn("ixBug", true, 0, "FogBugz Bug entity identifier.");
             tblExtendedEvents.AddIntColumn("sEventType", true, 0, "Extended event type name.");
             tblExtendedEvents.AddDateColumn("dtEventUtc", false, "Date and time of the event in UTC timezone.");
