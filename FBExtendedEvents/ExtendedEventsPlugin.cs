@@ -103,9 +103,7 @@ namespace FBExtendedEvents
         public CCSSInfo CSSInfo()
         {
             var css = new CCSSInfo();
-            css.sInlineCSS = "#bugviewContainer .bugevents .pseudobugevent.fbee-commit { background-color: #dff0f7; } ";
-            css.sInlineCSS += "#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-commit .body { color: #5a5f66; font-size: 11px; line-height: 15px; } ";
-            css.sInlineCSS += ".dlgButton { width: auto } ";
+            css.rgsStaticFiles = new[] { @"css\FBExtendedEvents.css" };
             return css;
         }
 

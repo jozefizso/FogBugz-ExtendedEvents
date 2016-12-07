@@ -19,9 +19,12 @@ namespace FBExtendedEvents
         public string ConfigPageDisplay()
         {
             string sHTML = "";
+            sHTML += @"<div class=""FBExtendedEvents"">";
             sHTML += GetHeader();
             sHTML += GetForm();
             sHTML += GetFooter();
+            sHTML += @"</div>";
+            
             return sHTML;
         }
 

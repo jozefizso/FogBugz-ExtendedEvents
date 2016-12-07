@@ -1,0 +1,12 @@
+﻿
+#bugviewContainer .bugevents .pseudobugevent.fbee-commit {
+  background-color: #dff0f7;
+}
+
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-commit .body {
+  color: #5a5f66; font-size: 11px; line-height: 15px;
+}
+
+.FBExtendedEvents .dlgButton {
+  width: auto;
+}
