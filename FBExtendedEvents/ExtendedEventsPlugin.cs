@@ -50,11 +50,24 @@ namespace FBExtendedEvents
             {
                 string sMessage = entity.sMessage;
                 sMessage = sMessage.Replace("\n", "<br>\n");
+                string sTitle = "";
 
-                DateTime dtEventLocal = this.api.TimeZone.CTZFromUTC(entity.dtEventUtc);
+                switch (entity.sEventType)
+                {
+                    case "commit":
+                        sTitle = $"Revision {entity.sCommitRevision} commited by";
+                        break;
+                    case "build-success":
+                        sTitle = $"Build {entity.sBuildName} successful";
+                        break;
+                    case "build-failure":
+                        sTitle = $"Build {entity.sBuildName} failed";
+                        break;
+                    case "releasenote":
+                        sTitle = $"Releasenotes message by";
+                        break;
+                }
 
-                //var sTitle = $"Commited revision {sRevision} by";
-                var sTitle = $"Event {entity.sEventType} by";
                 if (entity.ixPerson == 0 && String.IsNullOrEmpty(entity.sPersonName))
                 {
                     sTitle += " " + entity.sPersonName;
