@@ -92,7 +92,7 @@ namespace FBExtendedEvents
 
             tblExtendedEvents.AddIntColumn("ixBug", true, 0, "FogBugz Bug entity identifier.");
             tblExtendedEvents.AddVarcharColumn("sEventType", 50, true, "Extended event type name.");
-            tblExtendedEvents.AddDateColumn("dtEventUtc", false, "Date and time of the event in UTC timezone.");
+            tblExtendedEvents.AddDateColumn("dtEventUtc", true, DateTimeEx.UnixEpoch, "Date and time of the event in UTC timezone.");
             tblExtendedEvents.AddIntColumn("ixPerson", false, 0, "FogBugz Person entity identifier in case the sAuthor field was matched with a person.");
             tblExtendedEvents.AddVarcharColumn("sPersonName", 50, false, null, "Event author name.");
             tblExtendedEvents.AddTextColumn("sMessage", "Event detailed message.");

@@ -11,7 +11,7 @@ namespace FBExtendedEvents
 {
     public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginConfigPageDisplay, IPluginCSS, IPluginJS
     {
-        private const int DATABASE_SCHEMA_VERSION = 5;
+        private const int DATABASE_SCHEMA_VERSION = 6;
 
         public ExtendedEventsPlugin(CPluginApi api) : base(api)
         {
@@ -31,6 +31,10 @@ namespace FBExtendedEvents
 
         public void DatabaseUpgradeBefore(int ixVersionFrom, int ixVersionTo, CDatabaseUpgradeApi apiUpgrade)
         {
+            if (ixVersionFrom <= 5)
+            {
+                apiUpgrade.ChangeColumnDefinition(ExtendedEventEntity.GetPluginTableName(this.api.Database), "dtEventUtc");
+            }
         }
 
         public void DatabaseUpgradeAfter(int ixVersionFrom, int ixVersionTo, CDatabaseUpgradeApi apiUpgrade)
