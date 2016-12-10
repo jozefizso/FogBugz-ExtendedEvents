@@ -11,8 +11,8 @@ namespace FBExtendedEvents.Tests
         {
             get
             {
-                yield return new object[] { "plugin1", "default.asp?pg=pgPluginRaw&sPlugin=plugin1" };
-                yield return new object[] { "FBExtendedEvents@goit.io", "default.asp?pg=pgPluginRaw&sPlugin=FBExtendedEvents%40goit.io" };
+                yield return new object[] { "plugin1", "default.asp?pg=pgPluginRaw&sPluginId=plugin1" };
+                yield return new object[] { "FBExtendedEvents@goit.io", "default.asp?pg=pgPluginRaw&sPluginId=FBExtendedEvents%40goit.io" };
             }
         }
 

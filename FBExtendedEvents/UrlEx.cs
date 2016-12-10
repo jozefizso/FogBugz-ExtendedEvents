@@ -8,7 +8,7 @@ namespace FBExtendedEvents
     {
         public static string PluginRawPageUrl(string sPluginId)
         {
-            return "default.asp?pg=pgPluginRaw&sPlugin=" + Uri.EscapeDataString(sPluginId);
+            return "default.asp?pg=pgPluginRaw&sPluginId=" + Uri.EscapeDataString(sPluginId);
         }
     }
 }
