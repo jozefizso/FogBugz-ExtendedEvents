@@ -16,6 +16,8 @@ namespace FBExtendedEvents.Tests
                 yield return new object[] { "2015-01-01T17:47:27.064000Z", new DateTime(2015, 1, 1, 17, 47, 27, 64, DateTimeKind.Utc) };
                 yield return new object[] { "2015-01-01T17:47:27Z", new DateTime(2015, 1, 1, 17, 47, 27, 0, DateTimeKind.Utc) };
                 yield return new object[] { "2015-01-01T17:47:27.0000000+01:00", new DateTime(2015, 1, 1, 16, 47, 27, 0, DateTimeKind.Utc) };
+                yield return new object[] { "2016-12-09T14:50:47+01:00", new DateTime(2016, 12, 9, 13, 50, 47, 0, DateTimeKind.Utc) };
+
                 yield return new object[] { "2015-01-01T17:47:27.0645630Z", new DateTime(635557312470645630, DateTimeKind.Utc) };
                 yield return new object[] { "2015-01-01T17:47:27.064563Z", new DateTime(635557312470645630, DateTimeKind.Utc) };
             }
