@@ -25,6 +25,16 @@ namespace FBExtendedEvents
             var sCommitRevision = req.GetString("sCommitRevision", null);
             var sBuildName = req.GetString("sBuildName", null);
 
+            if (ixBug <= 0)
+            {
+                throw new Exception("Parameter ixBug must be positive, non-zero integer.");
+            }
+
+            if (dtEventUtc == DateTime.MinValue)
+            {
+                throw new Exception("Parameter dtEventUtc must be valid datetime value in ISO 8601 format.");
+            }
+
             var ixPerson = this.TryLoadPersonId(sPersonName);
 
             var entity = new ExtendedEventEntity
