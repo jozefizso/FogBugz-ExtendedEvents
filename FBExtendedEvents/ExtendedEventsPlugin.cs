@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Web;
 using FogCreek.FogBugz;
 using FogCreek.FogBugz.Plugins;
 using FogCreek.FogBugz.Plugins.Api;
@@ -76,7 +77,13 @@ namespace FBExtendedEvents
                     sTitle += " " + entity.sPersonName;
                 }
 
-                var sHtml = this.api.UI.BugEvent(entity.dtEventUtc, entity.ixPerson, sTitle, sMessage, null, $"fbee-{entity.sEventType}");
+                string sChanges = null;
+                if (!String.IsNullOrEmpty(entity.sExternalUrl))
+                {
+                    sChanges = $@"<a href=""{HttpUtility.HtmlAttributeEncode(entity.sExternalUrl)}"">View details</a>";
+                }
+
+                var sHtml = this.api.UI.BugEvent(entity.dtEventUtc, entity.ixPerson, sTitle, sMessage, sChanges, $"fbee-{entity.sEventType}");
                 var evt = new CPseudoBugEvent(entity.dtEventUtc, sHtml);
                 events.Add(evt);
             }
