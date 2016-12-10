@@ -38,11 +38,11 @@ namespace FBExtendedEvents
             qInsert.InsertString("sEventType", this.sEventType);
             qInsert.InsertDate("dtEventUtc", this.dtEventUtc);
             qInsert.InsertInt("ixPerson", this.ixPerson);
-            qInsert.InsertString("sPersonName", this.sPersonName);
-            qInsert.InsertString("sMessage", this.sMessage);
-            qInsert.InsertString("sExternalUrl", this.sExternalUrl);
-            qInsert.InsertString("sCommitRevision", this.sCommitRevision);
-            qInsert.InsertString("sBuildName", this.sBuildName);
+            qInsert.InsertNullableString("sPersonName", this.sPersonName);
+            qInsert.InsertNullableString("sMessage", this.sMessage);
+            qInsert.InsertNullableString("sExternalUrl", this.sExternalUrl);
+            qInsert.InsertNullableString("sCommitRevision", this.sCommitRevision);
+            qInsert.InsertNullableString("sBuildName", this.sBuildName);
 
             return qInsert.Execute();
         }

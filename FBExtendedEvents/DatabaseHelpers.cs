@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using FogCreek.FogBugz.Database;
 using FogCreek.FogBugz.Plugins;
 using FogCreek.FogBugz.Plugins.Api;
 
@@ -12,6 +13,14 @@ namespace FBExtendedEvents
             foreach (var entity in entities)
             {
                 entity.Save(db);
+            }
+        }
+
+        public static void InsertNullableString(this CInsertQuery query, string sColumn, string val)
+        {
+            if (val != null)
+            { 
+                query.InsertString(sColumn, val);
             }
         }
 
