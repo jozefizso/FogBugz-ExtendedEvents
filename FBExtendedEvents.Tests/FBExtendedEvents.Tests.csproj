@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="DatabaseHelpersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UrlExTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
