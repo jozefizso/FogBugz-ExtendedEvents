@@ -49,10 +49,15 @@ namespace FBExtendedEvents
         {
             var val = request[name];
 
+            return GetDateTime(val, defaultValue);
+        }
+
+        public static DateTime GetDateTime(string datetime, DateTime defaultValue)
+        {
             DateTime value;
-            if (DateTime.TryParseExact(val, ROUNDTRIP_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out value))
+            if (DateTime.TryParseExact(datetime, ROUNDTRIP_DATE_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out value))
             {
-                return value;
+                return value.ToUniversalTime();
             }
 
             return defaultValue;
