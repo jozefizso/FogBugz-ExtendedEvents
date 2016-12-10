@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBExtendedEvents", "FBExtendedEvents\FBExtendedEvents.csproj", "{DC011599-24B0-4A15-ACC5-BC3FA9A446D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBExtendedEvents.Tests", "FBExtendedEvents.Tests\FBExtendedEvents.Tests.csproj", "{C0C288D6-D1A7-42A3-8BF0-3B6651C2D165}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DC011599-24B0-4A15-ACC5-BC3FA9A446D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC011599-24B0-4A15-ACC5-BC3FA9A446D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC011599-24B0-4A15-ACC5-BC3FA9A446D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0C288D6-D1A7-42A3-8BF0-3B6651C2D165}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0C288D6-D1A7-42A3-8BF0-3B6651C2D165}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0C288D6-D1A7-42A3-8BF0-3B6651C2D165}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0C288D6-D1A7-42A3-8BF0-3B6651C2D165}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
