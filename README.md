@@ -5,4 +5,4 @@ FogBugz plugin that extends it with more event types.
 
 ## License
 
-MIT License, Copyright (c) 2015 Jozef Izso
+MIT License, Copyright (c) 2015-2016 Jozef Izso
