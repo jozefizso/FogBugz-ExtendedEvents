@@ -7,6 +7,7 @@ using FogCreek.FogBugz.Plugins;
 using FogCreek.FogBugz.Plugins.Api;
 using FogCreek.FogBugz.Plugins.Entity;
 using FogCreek.FogBugz.Plugins.Interfaces;
+using Vereyon.Web;
 
 namespace FBExtendedEvents
 {
@@ -46,6 +47,8 @@ namespace FBExtendedEvents
         {
             int ixBug = bug.ixBug;
 
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
             var query = ExtendedEventEntity.QueryEvents(this.api.Database, ixBug);
 
             var events = new List<CPseudoBugEvent>();
@@ -53,13 +56,14 @@ namespace FBExtendedEvents
             foreach (var entity in query)
             {
                 string sMessage = entity.sMessage;
-                sMessage = sMessage.Replace("\n", "<br>\n");
+                sMessage = sanitizer.Sanitize(sMessage);
                 string sTitle = "";
 
                 switch (entity.sEventType)
                 {
                     case "commit":
                         sTitle = $"Revision {entity.sCommitRevision} commited by";
+                        sMessage = sMessage.Replace("\n", "<br>\n");
                         break;
                     case "build-success":
                         sTitle = $"Build {entity.sBuildName} successful";

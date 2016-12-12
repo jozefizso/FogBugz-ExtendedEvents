@@ -44,6 +44,9 @@
       <HintPath>..\packages\FogCreek.FogBugz.Unofficial.8.8.53.0\lib\net20\FogCreek.Plugins.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\libs\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -55,8 +58,14 @@
   <ItemGroup>
     <Compile Include="CreateEventCommand.cs" />
     <Compile Include="DateTimeEx.cs" />
+    <Compile Include="EnumerableEx.cs" />
     <Compile Include="ExtendedEventEntity.cs" />
     <Compile Include="FormsEx.cs" />
+    <Compile Include="StringEx.cs" />
+    <Compile Include="HtmlSanitizer\HtmlSanitizer.cs" />
+    <Compile Include="HtmlSanitizer\HtmlSanitizerFluentHelper.cs" />
+    <Compile Include="HtmlSanitizer\HtmlSanitizerTagRule.cs" />
+    <Compile Include="HtmlSanitizer\IHtmlSanitizer.cs" />
     <Compile Include="PluginConfigPageDisplay.cs" />
     <Compile Include="DatabaseHelpers.cs" />
     <Compile Include="ExtendedEventsPlugin.cs" />
@@ -75,6 +84,9 @@
     <None Include="static\css\FBExtendedEvents.less" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="static\css\cleanslate.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="static\css\FBExtendedEvents.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
