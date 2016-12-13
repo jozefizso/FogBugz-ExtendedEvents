@@ -1,5 +1,6 @@
 ﻿using System;
 using FogCreek.FogBugz.Plugins.Api;
+using Vereyon.Web;
 
 namespace FBExtendedEvents
 {
@@ -37,6 +38,8 @@ namespace FBExtendedEvents
 
             var ixPerson = this.TryLoadPersonId(sPersonName);
 
+            sMessage = this.SanitizeMessage(sEventType, sMessage);
+
             var entity = new ExtendedEventEntity
             {
                 ixBug = ixBug,
@@ -52,6 +55,24 @@ namespace FBExtendedEvents
 
             var ixCommitEvent = entity.Save(this.api.Database);
             return ixCommitEvent;
+        }
+
+        private string SanitizeMessage(string sEventType, string sMessage)
+        {
+            if (String.IsNullOrEmpty(sMessage))
+            {
+                return sMessage;
+            }
+
+            switch (sEventType)
+            {
+                case "commit":
+                case "none":
+                    return sMessage;
+                default:
+                    var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+                    return sanitizer.Sanitize(sMessage);
+            }
         }
 
         private int TryLoadPersonId(string sAuthor)

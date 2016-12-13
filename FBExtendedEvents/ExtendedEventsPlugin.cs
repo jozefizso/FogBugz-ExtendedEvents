@@ -56,23 +56,29 @@ namespace FBExtendedEvents
             foreach (var entity in query)
             {
                 string sMessage = entity.sMessage;
-                sMessage = sanitizer.Sanitize(sMessage);
                 string sTitle = "";
 
                 switch (entity.sEventType)
                 {
                     case "commit":
                         sTitle = $"Revision {entity.sCommitRevision} commited by";
+                        sMessage = HttpUtility.HtmlEncode(sMessage);
                         sMessage = sMessage.Replace("\n", "<br>\n");
                         break;
                     case "build-success":
                         sTitle = $"Build {entity.sBuildName} successful";
+                        sMessage = sanitizer.Sanitize(sMessage);
                         break;
                     case "build-failure":
                         sTitle = $"Build {entity.sBuildName} failed";
+                        sMessage = sanitizer.Sanitize(sMessage);
                         break;
                     case "releasenote":
                         sTitle = $"Releasenotes message by";
+                        sMessage = sanitizer.Sanitize(sMessage);
+                        break;
+                    default:
+                        sMessage = HttpUtility.HtmlEncode(sMessage);
                         break;
                 }
 
