@@ -324,6 +324,12 @@ namespace Vereyon.Web
                     return SanitizerOperation.DoNothing;
             }
 
+            // allow HTML5 data-* attributes
+            if (attribute.Name.StartsWith("data-", StringComparison.OrdinalIgnoreCase))
+            {
+                return SanitizerOperation.DoNothing;
+            }
+
             HtmlSanitizerCheckType checkType;
             SanitizerOperation operation;
 
