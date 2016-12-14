@@ -30,7 +30,7 @@ namespace Vereyon.Web
         /// <summary>
         /// Contains sanitation checks supported HtmlSanitizer class instance.
         /// </summary>
-        public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
+        public IDictionary<HtmlSanitizerCheckType, IHtmlAttributeSanitizer> AttributeCheckRegistry { get; protected set; }
 
         /// <summary>
         /// Gets / sets if any HTML comments should be removed.
@@ -54,20 +54,19 @@ namespace Vereyon.Web
             EncodeHtmlEntities = true;
             AllowedCssClasses = new List<string>();
             Rules = new Dictionary<string, HtmlSanitizerTagRule>();
-            AttributeCheckRegistry = new Dictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler>();
+            AttributeCheckRegistry = new Dictionary<HtmlSanitizerCheckType, IHtmlAttributeSanitizer>();
 
-            //RegisterChecks();
+            RegisterChecks();
         }
 
-        ///// <summary>
-        ///// Registers the out of the box supported sanitation checks.
-        ///// </summary>
-        //private void RegisterChecks()
-        //{
-
-        //    AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(UrlCheckHandler));
-        //    AttributeCheckRegistry.Add(HtmlSanitizerCheckType.AllowAttribute, new HtmlSanitizerAttributeCheckHandler(x => SanitizerOperation.DoNothing));
-        //}
+        /// <summary>
+        /// Registers the out of the box supported sanitation checks.
+        /// </summary>
+        private void RegisterChecks()
+        {
+            AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new UrlCheckHandler());
+            AttributeCheckRegistry.Add(HtmlSanitizerCheckType.AllowAttribute, new AllowAttributeHandler());
+        }
 
         /// <summary>
         /// A attribute check handler returns false if the attribute is to be rejected and removed.
@@ -336,7 +335,17 @@ namespace Vereyon.Web
             // Apply attribute checks. If the check fails, remove the attribute completely and return.
             if (rule.CheckAttributes.TryGetValue(attribute.Name, out checkType))
             {
-                operation = AttributeCheckRegistry[checkType](attribute);
+                IHtmlAttributeSanitizer attributeCheck;
+
+                if (this.AttributeCheckRegistry.TryGetValue(checkType, out attributeCheck))
+                {
+                    operation = attributeCheck.CheckAttribute(attribute);
+                }
+                else
+                {
+                    operation = SanitizerOperation.RemoveAttribute;
+                }
+
                 switch (operation)
                 {
                     case SanitizerOperation.FlattenTag:
@@ -448,6 +457,10 @@ namespace Vereyon.Web
                 .CheckAttribute("href", HtmlSanitizerCheckType.Url)
                 .RemoveEmpty()
                 .NoAttributes(SanitizerOperation.FlattenTag);
+            sanitizer.Tag("img")
+                .CheckAttribute("src", HtmlSanitizerCheckType.Url)
+                .AllowAttributes("alt height width rel")
+                .NoAttributes(SanitizerOperation.RemoveTag);
 
             return sanitizer;
         }

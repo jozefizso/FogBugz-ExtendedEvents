@@ -94,6 +94,9 @@
     <Compile Include="HtmlAgilityPack\Trace.cs" />
     <Compile Include="HtmlAgilityPack\Trace.FullFramework.cs" />
     <Compile Include="HtmlAgilityPack\Utilities.cs" />
+    <Compile Include="HtmlSanitizer\IHtmlAttributeSanitizer.cs" />
+    <Compile Include="HtmlSanitizer\AllowAttributeHandler.cs" />
+    <Compile Include="HtmlSanitizer\UrlCheckHandler.cs" />
     <Compile Include="StringEx.cs" />
     <Compile Include="HtmlSanitizer\HtmlSanitizer.cs" />
     <Compile Include="HtmlSanitizer\HtmlSanitizerFluentHelper.cs" />
