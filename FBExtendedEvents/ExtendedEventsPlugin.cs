@@ -143,7 +143,7 @@ namespace FBExtendedEvents
                     sChanges.Append($@" <a href=""{HttpUtility.HtmlAttributeEncode(entity.sExternalUrl)}"">View details</a>");
                 }
 
-                var sHtml = this.api.UI.BugEvent(entity.dtEventUtc, entity.ixPerson, sTitle, sMessage, sChanges.ToString(), $"fbee-{entity.sEventType}");
+                var sHtml = this.api.UI.BugEvent(entity.dtEventUtc, entity.ixPerson, sTitle, sMessage, sChanges.ToString(), $"fbee-event fbee-{entity.sEventType}");
                 var evt = new CPseudoBugEvent(entity.dtEventUtc, sHtml);
                 events.Add(evt);
             }

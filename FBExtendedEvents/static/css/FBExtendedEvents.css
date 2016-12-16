@@ -11,25 +11,45 @@
 #bugviewContainer .bugevents .pseudobugevent.fbee-releasenote {
   background-color: #FFDC81;
 }
-#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-commit .body {
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body {
   color: #5a5f66;
   font-size: 11px;
   line-height: 15px;
 }
-#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-build-success .body {
-  color: #5a5f66;
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body header {
+  color: black;
+  font-weight: bold;
   font-size: 11px;
-  line-height: 15px;
 }
-#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-build-failure .body {
-  color: #5a5f66;
-  font-size: 11px;
-  line-height: 15px;
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ul {
+  list-style-type: disc;
 }
-#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-releasenote .body {
-  color: #5a5f66;
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ol {
+  list-style-type: decimal;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ol,
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ul {
   font-size: 11px;
-  line-height: 15px;
+  margin: 0 .08em 0 0;
+  padding-left: 20px;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ol li,
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ul li {
+  display: list-item;
+  list-style-type: inherit;
+  list-style-position: outside;
+  margin-top: .08em;
+  padding-left: 0;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ol ul,
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ul ul {
+  list-style-type: circle;
+}
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ol ol ul,
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ul ol ul,
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ol ul ul,
+#bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body ul ul ul {
+  list-style-type: square;
 }
 .FBExtendedEvents .dlgButton {
   width: auto;
