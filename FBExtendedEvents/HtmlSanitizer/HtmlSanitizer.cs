@@ -424,6 +424,7 @@ namespace Vereyon.Web
             var sanitizer = new HtmlSanitizer();
 
             sanitizer.WhiteListMode = true;
+            sanitizer.Tag("header").RemoveEmpty();
             sanitizer.Tag("h1").RemoveEmpty();
             sanitizer.Tag("h2").RemoveEmpty();
             sanitizer.Tag("h3").RemoveEmpty();
