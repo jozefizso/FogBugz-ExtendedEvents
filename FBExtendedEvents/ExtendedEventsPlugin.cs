@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using System.Web;
 using FogCreek.FogBugz;
 using FogCreek.FogBugz.Plugins;
@@ -122,13 +123,27 @@ namespace FBExtendedEvents
                     sTitle += " " + entity.sPersonName;
                 }
 
-                string sChanges = null;
-                if (!String.IsNullOrEmpty(entity.sExternalUrl))
+                var sChanges = new StringBuilder();
+                if (!String.IsNullOrEmpty(entity.sModuleName))
                 {
-                    sChanges = $@"<a href=""{HttpUtility.HtmlAttributeEncode(entity.sExternalUrl)}"">View details</a>";
+                    sChanges.Append(entity.sModuleName);
                 }
 
-                var sHtml = this.api.UI.BugEvent(entity.dtEventUtc, entity.ixPerson, sTitle, sMessage, sChanges, $"fbee-{entity.sEventType}");
+                if (!String.IsNullOrEmpty(entity.sBranchName))
+                {
+                    if (sChanges.Length > 0)
+                    {
+                        sChanges.Append(": ");
+                    }
+                    sChanges.Append(entity.sBranchName);
+                }
+
+                if (!String.IsNullOrEmpty(entity.sExternalUrl))
+                {
+                    sChanges.Append($@" <a href=""{HttpUtility.HtmlAttributeEncode(entity.sExternalUrl)}"">View details</a>");
+                }
+
+                var sHtml = this.api.UI.BugEvent(entity.dtEventUtc, entity.ixPerson, sTitle, sMessage, sChanges.ToString(), $"fbee-{entity.sEventType}");
                 var evt = new CPseudoBugEvent(entity.dtEventUtc, sHtml);
                 events.Add(evt);
             }
