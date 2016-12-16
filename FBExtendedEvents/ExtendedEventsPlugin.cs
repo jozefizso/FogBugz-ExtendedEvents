@@ -13,7 +13,7 @@ namespace FBExtendedEvents
 {
     public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginConfigPageDisplay, IPluginCSS, IPluginJS
     {
-        private const int DATABASE_SCHEMA_VERSION = 8;
+        private const int DATABASE_SCHEMA_VERSION = 9;
 
         private const int DB_CHANGE_VERSION_EVENTUTC = 5;
         private const int DB_CHANGE_VERSION_MESSAGES_HTML_SANITIZE = 7;

@@ -30,6 +30,10 @@ namespace FBExtendedEvents
 
         public string sBuildName { get; set; }
 
+        public string sModuleName { get; set; }
+
+        public string sBranchName { get; set; }
+
         public int Save(CDatabaseApi db)
         {
             var qInsert = db.NewInsertQuery(GetPluginTableName(db));
@@ -43,6 +47,8 @@ namespace FBExtendedEvents
             qInsert.InsertNullableString("sExternalUrl", this.sExternalUrl);
             qInsert.InsertNullableString("sCommitRevision", this.sCommitRevision);
             qInsert.InsertNullableString("sBuildName", this.sBuildName);
+            qInsert.InsertNullableString("sModuleName", this.sModuleName);
+            qInsert.InsertNullableString("sBranchName", this.sBranchName);
 
             return qInsert.Execute();
         }
@@ -59,6 +65,8 @@ namespace FBExtendedEvents
             this.sExternalUrl = Convert.ToString(row["sExternalUrl"]);
             this.sCommitRevision = Convert.ToString(row["sCommitRevision"]);
             this.sBuildName = Convert.ToString(row["sBuildName"]);
+            this.sModuleName = Convert.ToString(row["sModuleName"]);
+            this.sBranchName = Convert.ToString(row["sBranchName"]);
         }
 
         public static IEnumerable<ExtendedEventEntity> QueryEvents(CDatabaseApi db, int ixBug)
@@ -67,7 +75,6 @@ namespace FBExtendedEvents
             selectQuery.AddSelect("*");
             selectQuery.AddWhere("ixBug = @ixBug");
             selectQuery.SetParamInt("@ixBug", ixBug);
-
 
             var ds = selectQuery.GetDataSet();
             if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
@@ -99,6 +106,8 @@ namespace FBExtendedEvents
             tblExtendedEvents.AddTextColumn("sExternalUrl", "Link to the event in external system that generated the event.");
             tblExtendedEvents.AddVarcharColumn("sCommitRevision", 255, false, null, "Revision number or text from Subversion, Git or other CVS system.");
             tblExtendedEvents.AddVarcharColumn("sBuildName", 255, false, null, "Build name from TeamCity or Jenkins.");
+            tblExtendedEvents.AddVarcharColumn("sModuleName", 255, false, null, "Module name related to the event.");
+            tblExtendedEvents.AddVarcharColumn("sBranchName", 255, false, null, "Branch name related to the event.");
 
             tblExtendedEvents.AddTableIndex("IX_ixBug", "ixBug", "Index to retrieve events by ixBug efficiently.");
             tblExtendedEvents.AddTableIndex("IX_dtEventUtc", "dtEventUtc", "Index to retrieve events by date efficiently.");
