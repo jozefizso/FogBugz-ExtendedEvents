@@ -188,7 +188,7 @@ namespace Vereyon.Web
             if (!Rules.TryGetValue(node.Name, out rule)
                 && WhiteListMode && node.NodeType != HtmlNodeType.Document)
             {
-                node.Remove();
+                ApplyNodeOperation(node, SanitizerOperation.FlattenTag);
                 return;
             }
 
@@ -433,6 +433,7 @@ namespace Vereyon.Web
             var sanitizer = new HtmlSanitizer();
 
             sanitizer.WhiteListMode = true;
+            sanitizer.Tag("script").Remove();
             sanitizer.Tag("header").RemoveEmpty();
             sanitizer.Tag("h1").RemoveEmpty();
             sanitizer.Tag("h2").RemoveEmpty();

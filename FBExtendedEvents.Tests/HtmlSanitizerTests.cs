@@ -40,5 +40,37 @@ namespace FBExtendedEvents.Tests
             // Assert
             Assert.AreEqual(expectedHtml, actualHtml);
         }
+
+        [Test]
+        public void Sanitizer_UnknownHtmlTag_FlattensTagAndPreservesContent()
+        {
+            // Arrange
+            var html = @"Custom <x>tag</x>";
+            var expectedHtml = @"Custom tag";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
+
+        [Test]
+        public void Sanitizer_HtmlScriptTag_RemovesTagAndContent()
+        {
+            // Arrange
+            var html = @"Hello <script>alert('world')</script>";
+            var expectedHtml = @"Hello ";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
     }
 }
