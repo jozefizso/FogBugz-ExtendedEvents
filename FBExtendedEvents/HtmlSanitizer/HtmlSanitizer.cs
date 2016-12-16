@@ -446,12 +446,15 @@ namespace Vereyon.Web
             sanitizer.Tag("em");
             sanitizer.Tag("code");
             sanitizer.Tag("br");
+            sanitizer.Tag("hr");
             sanitizer.Tag("p");
             sanitizer.Tag("pre");
             sanitizer.Tag("div").NoAttributes(SanitizerOperation.FlattenTag);
             sanitizer.Tag("span").RemoveEmpty();
             sanitizer.Tag("ul");
             sanitizer.Tag("ol");
+            sanitizer.Tag("dl");
+            sanitizer.Tag("dt");
             sanitizer.Tag("li");
             sanitizer.Tag("a").SetAttribute("target", "_blank")
                 .SetAttribute("rel", "nofollow")
