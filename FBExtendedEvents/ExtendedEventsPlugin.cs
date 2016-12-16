@@ -13,7 +13,10 @@ namespace FBExtendedEvents
 {
     public class ExtendedEventsPlugin : Plugin, IPluginDatabase, IPluginPseudoBugEvent, IPluginRawPageDisplay, IPluginConfigPageDisplay, IPluginCSS, IPluginJS
     {
-        private const int DATABASE_SCHEMA_VERSION = 6;
+        private const int DATABASE_SCHEMA_VERSION = 8;
+
+        private const int DB_CHANGE_VERSION_EVENTUTC = 5;
+        private const int DB_CHANGE_VERSION_MESSAGES_HTML_SANITIZE = 7;
 
         public ExtendedEventsPlugin(CPluginApi api) : base(api)
         {
@@ -33,7 +36,7 @@ namespace FBExtendedEvents
 
         public void DatabaseUpgradeBefore(int ixVersionFrom, int ixVersionTo, CDatabaseUpgradeApi apiUpgrade)
         {
-            if (ixVersionFrom <= 5)
+            if (ixVersionFrom <= DB_CHANGE_VERSION_EVENTUTC)
             {
                 apiUpgrade.ChangeColumnDefinition(ExtendedEventEntity.GetPluginTableName(this.api.Database), "dtEventUtc");
             }
@@ -41,6 +44,38 @@ namespace FBExtendedEvents
 
         public void DatabaseUpgradeAfter(int ixVersionFrom, int ixVersionTo, CDatabaseUpgradeApi apiUpgrade)
         {
+            if (ixVersionFrom <= DB_CHANGE_VERSION_MESSAGES_HTML_SANITIZE)
+            {
+                var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+                var selectQuery = this.api.Database.NewSelectQuery(ExtendedEventEntity.GetPluginTableName(this.api.Database));
+                selectQuery.AddSelect("ixExtendedEvent, sMessage");
+                selectQuery.AddWhere("sEventType <> @sEventType");
+                selectQuery.SetParamString("@sEventType", "commit");
+
+                var ds = selectQuery.GetDataSet();
+                if (ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        var sMessage = row["sMessage"] as string;
+
+                        if (!String.IsNullOrEmpty(sMessage))
+                        {
+                            sMessage = sanitizer.Sanitize(sMessage);
+
+                            var ixExtendedEvent = Convert.ToInt32(row["ixExtendedEvent"]);
+
+                            var updateQuery = this.api.Database.NewUpdateQuery(ExtendedEventEntity.GetPluginTableName(this.api.Database));
+                            updateQuery.UpdateString("sMessage", sMessage);
+                            updateQuery.AddWhere("ixExtendedEvent = @ixExtendedEvent");
+                            updateQuery.SetParamInt("@ixExtendedEvent", ixExtendedEvent);
+
+                            updateQuery.Execute();
+                        }
+                    }
+                }
+            }
         }
 
         public CPseudoBugEvent[] PseudoBugEvents(CBug bug, CBugEvent[] rgBugEvent)
