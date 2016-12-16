@@ -5,7 +5,9 @@ function Post-Commit() {
         $sPersonName,
         $sMessage,
         $sExternalUrl,
-        $sCommitRevision
+        $sCommitRevision,
+        $sModuleName,
+        $sBranchName
     )
 
     Post-ExtendedEvent -sEventType "commit" `
@@ -14,7 +16,9 @@ function Post-Commit() {
                        -sPersonName $sPersonName `
                        -sMessage $sMessage `
                        -sExternalUrl $sExternalUrl `
-                       -sCommitRevision $sCommitRevision
+                       -sCommitRevision $sCommitRevision `
+                       -sModuleName $sModuleName `
+                       -sBranchName $sBranchName
 }
 
 function Post-BuildSuccess() {
@@ -24,7 +28,9 @@ function Post-BuildSuccess() {
         $sPersonName,
         $sMessage,
         $sExternalUrl,
-        $sBuildName
+        $sBuildName,
+        $sModuleName,
+        $sBranchName
     )
 
     Post-ExtendedEvent -sEventType "build-success" `
@@ -33,7 +39,9 @@ function Post-BuildSuccess() {
                        -sPersonName $sPersonName `
                        -sMessage $sMessage `
                        -sExternalUrl $sExternalUrl `
-                       -sBuildName $sBuildName
+                       -sBuildName $sBuildName `
+                       -sModuleName $sModuleName `
+                       -sBranchName $sBranchName
 }
 
 
@@ -44,7 +52,9 @@ function Post-BuildFailure() {
         $sPersonName,
         $sMessage,
         $sExternalUrl,
-        $sBuildName
+        $sBuildName,
+        $sModuleName,
+        $sBranchName
     )
 
     Post-ExtendedEvent -sEventType "build-failure" `
@@ -53,7 +63,9 @@ function Post-BuildFailure() {
                        -sPersonName $sPersonName `
                        -sMessage $sMessage `
                        -sExternalUrl $sExternalUrl `
-                       -sBuildName $sBuildName
+                       -sBuildName $sBuildName `
+                       -sModuleName $sModuleName `
+                       -sBranchName $sBranchName
 }
 
 
@@ -63,7 +75,9 @@ function Post-ReleaseNote() {
         $dtEventUtc,
         $sPersonName,
         $sMessage,
-        $sExternalUrl
+        $sExternalUrl,
+        $sModuleName,
+        $sBranchName
     )
 
     Post-ExtendedEvent -sEventType "releasenote" `
@@ -71,7 +85,9 @@ function Post-ReleaseNote() {
                        -dtEventUtc $dtEventUtc `
                        -sPersonName $sPersonName `
                        -sMessage $sMessage `
-                       -sExternalUrl $sExternalUrl
+                       -sExternalUrl $sExternalUrl `
+                       -sModuleName $sModuleName `
+                       -sBranchName $sBranchName
 }
 
 
@@ -84,7 +100,9 @@ function Post-ExtendedEvent() {
         $sMessage,
         $sExternalUrl,
         $sCommitRevision,
-        $sBuildName
+        $sBuildName,
+        $sModuleName,
+        $sBranchName
     )
 
     $sPluginId="FBExtendedEvents@goit.io"
@@ -99,6 +117,8 @@ function Post-ExtendedEvent() {
       "sExternalUrl" = $sExternalUrl
       "sCommitRevision"= $sCommitRevision
       "sBuildName" = $sBuildName
+      "sModuleName" = $sModuleName
+      "sBranchName" = $sBranchName
       "token" = $sToken
     }
 

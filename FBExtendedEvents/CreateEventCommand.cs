@@ -25,6 +25,8 @@ namespace FBExtendedEvents
             var sExternalUrl = req.GetString("sExternalUrl", null);
             var sCommitRevision = req.GetString("sCommitRevision", null);
             var sBuildName = req.GetString("sBuildName", null);
+            var sModuleName = req.GetString("sModuleName", null);
+            var sBranchName = req.GetString("sBranchName", null);
 
             if (ixBug <= 0)
             {
@@ -50,7 +52,9 @@ namespace FBExtendedEvents
                 sMessage = sMessage,
                 sExternalUrl = sExternalUrl,
                 sCommitRevision = sCommitRevision,
-                sBuildName = sBuildName
+                sBuildName = sBuildName,
+                sModuleName = sModuleName,
+                sBranchName = sBranchName
             };
 
             var ixCommitEvent = entity.Save(this.api.Database);
