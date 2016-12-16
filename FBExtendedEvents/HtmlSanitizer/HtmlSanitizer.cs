@@ -434,8 +434,10 @@ namespace Vereyon.Web
             sanitizer.Tag("b").Rename("strong").RemoveEmpty();
             sanitizer.Tag("i").RemoveEmpty();
             sanitizer.Tag("em");
+            sanitizer.Tag("code");
             sanitizer.Tag("br");
             sanitizer.Tag("p");
+            sanitizer.Tag("pre");
             sanitizer.Tag("div").NoAttributes(SanitizerOperation.FlattenTag);
             sanitizer.Tag("span").RemoveEmpty();
             sanitizer.Tag("ul");
