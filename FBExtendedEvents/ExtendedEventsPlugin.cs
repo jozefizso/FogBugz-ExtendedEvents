@@ -120,13 +120,13 @@ namespace FBExtendedEvents
 
                 if (entity.ixPerson == 0 && String.IsNullOrEmpty(entity.sPersonName))
                 {
-                    sTitle += " " + entity.sPersonName;
+                    sTitle += " " + HttpUtility.HtmlEncode(entity.sPersonName);
                 }
 
                 var sChanges = new StringBuilder();
                 if (!String.IsNullOrEmpty(entity.sModuleName))
                 {
-                    sChanges.Append(entity.sModuleName);
+                    sChanges.Append(HttpUtility.HtmlEncode(entity.sModuleName));
                 }
 
                 if (!String.IsNullOrEmpty(entity.sBranchName))
@@ -135,7 +135,7 @@ namespace FBExtendedEvents
                     {
                         sChanges.Append(": ");
                     }
-                    sChanges.Append(entity.sBranchName);
+                    sChanges.Append(HttpUtility.HtmlEncode(entity.sBranchName));
                 }
 
                 if (!String.IsNullOrEmpty(entity.sExternalUrl))
