@@ -91,6 +91,29 @@ function Post-ReleaseNote() {
 }
 
 
+function Post-Deployment() {
+    param (
+        $ixBug,
+        $dtEventUtc,
+        $sPersonName,
+        $sMessage,
+        $sExternalUrl,
+        $sModuleName,
+        $sBranchName
+    )
+
+    Post-ExtendedEvent -sEventType "deployment" `
+                       -ixBug $ixBug `
+                       -dtEventUtc $dtEventUtc `
+                       -sPersonName $sPersonName `
+                       -sMessage $sMessage `
+                       -sExternalUrl $sExternalUrl `
+                       -sModuleName $sModuleName `
+                       -sBranchName $sBranchName
+}
+
+
+
 function Post-ExtendedEvent() {
     param (
         $ixBug,
