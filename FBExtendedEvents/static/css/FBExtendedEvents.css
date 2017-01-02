@@ -11,6 +11,9 @@
 #bugviewContainer .bugevents .pseudobugevent.fbee-releasenote {
   background-color: #FFDC81;
 }
+#bugviewContainer .bugevents .pseudobugevent.fbee-deployment {
+  background-color: #D1C4E9;
+}
 #bugviewContainer .bugevents .pseudobugevent.detailed.fbee-event .body {
   color: #5a5f66;
   font-size: 11px;

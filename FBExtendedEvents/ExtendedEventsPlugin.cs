@@ -113,6 +113,10 @@ namespace FBExtendedEvents
                         sTitle = $"Releasenotes message by";
                         sMessage = sanitizer.Sanitize(sMessage);
                         break;
+                    case "deployment":
+                        sTitle = $"Deployed";
+                        sMessage = sanitizer.Sanitize(sMessage);
+                        break;
                     default:
                         sMessage = HttpUtility.HtmlEncode(sMessage);
                         break;
