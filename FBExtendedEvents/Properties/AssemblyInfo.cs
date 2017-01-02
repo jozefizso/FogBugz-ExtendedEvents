@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Show events from external sources like Subversion, TeamCity and Jenkins.")]
 [assembly: AssemblyCompany("Jozef Izso")]
 [assembly: AssemblyProduct("FBExtendedEvents")]
-[assembly: AssemblyCopyright("Copyright © 2015-2016 Jozef Izso")]
+[assembly: AssemblyCopyright("Copyright © 2015-2017 Jozef Izso")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
