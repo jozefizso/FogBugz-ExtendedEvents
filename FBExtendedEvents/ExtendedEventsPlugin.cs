@@ -97,7 +97,7 @@ namespace FBExtendedEvents
                 switch (entity.sEventType)
                 {
                     case "commit":
-                        sTitle = $"Revision {entity.sCommitRevision} commited by";
+                        sTitle = $"Revision {entity.sCommitRevision} commited";
                         sMessage = HttpUtility.HtmlEncode(sMessage);
                         sMessage = sMessage.Replace("\n", "<br>\n");
                         break;
@@ -110,7 +110,7 @@ namespace FBExtendedEvents
                         sMessage = sanitizer.Sanitize(sMessage);
                         break;
                     case "releasenote":
-                        sTitle = $"Releasenotes message by";
+                        sTitle = $"Releasenotes message";
                         sMessage = sanitizer.Sanitize(sMessage);
                         break;
                     case "deployment":
@@ -122,9 +122,13 @@ namespace FBExtendedEvents
                         break;
                 }
 
-                if (entity.ixPerson == 0 && String.IsNullOrEmpty(entity.sPersonName))
+                if (entity.ixPerson == 0 && !String.IsNullOrEmpty(entity.sPersonName))
                 {
-                    sTitle += " " + HttpUtility.HtmlEncode(entity.sPersonName);
+                    sTitle += " by " + HttpUtility.HtmlEncode(entity.sPersonName);
+                }
+                else if (entity.ixPerson > 0)
+                {
+                    sTitle += " by";
                 }
 
                 var sChanges = new StringBuilder();
