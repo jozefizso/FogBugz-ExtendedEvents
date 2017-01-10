@@ -72,5 +72,37 @@ namespace FBExtendedEvents.Tests
             // Assert
             Assert.AreEqual(expectedHtml, actualHtml);
         }
+
+        [Test]
+        public void Sanitizer_ImageWithBase64DataUri_PreservesTag()
+        {
+            // Arrange
+            var html = @"<img src=""data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="" alt=""Red dot"">";
+            var expectedHtml = @"<img src=""data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="" alt=""Red dot"">";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
+
+        [Test]
+        public void Sanitizer_ImageWithBase64DataHtmlXssUri_RemovesTag()
+        {
+            // Arrange
+            var html = @"<img src=""data:text/html,<script>alert('hi');</script>"" alt=""Red dot"" />";
+            var expectedHtml = String.Empty;
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
     }
 }

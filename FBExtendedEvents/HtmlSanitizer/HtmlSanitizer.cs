@@ -66,6 +66,7 @@ namespace Vereyon.Web
         {
             AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new UrlCheckHandler());
             AttributeCheckRegistry.Add(HtmlSanitizerCheckType.AllowAttribute, new AllowAttributeHandler());
+            AttributeCheckRegistry.Add(HtmlSanitizerCheckType.UrlOrBase64Data, new UrlOrBase64DataCheckHandler());
         }
 
         /// <summary>
@@ -105,6 +106,23 @@ namespace Vereyon.Web
             attribute.Value = uri.ToString();
 
             return true;
+        }
+
+        /// <summary>
+        /// Checks if the passed HTML attribute contains a data URI.
+        /// </summary>
+        /// <param name="attribute"></param>
+        public static bool AttributeBase64Check(HtmlAttribute attribute)
+        {
+            string dataUri = attribute.Value;
+
+            // check for data: uri and image media type
+            if (dataUri.StartsWith("data:image/", StringComparison.InvariantCulture))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -462,7 +480,7 @@ namespace Vereyon.Web
                 .RemoveEmpty()
                 .NoAttributes(SanitizerOperation.FlattenTag);
             sanitizer.Tag("img")
-                .CheckAttribute("src", HtmlSanitizerCheckType.Url)
+                .CheckAttribute("src", HtmlSanitizerCheckType.UrlOrBase64Data)
                 .AllowAttributes("alt height width rel")
                 .NoAttributes(SanitizerOperation.RemoveTag);
 
@@ -485,9 +503,9 @@ namespace Vereyon.Web
         }
     }
 
+    [Flags]
     public enum HtmlSanitizerCheckType
     {
-
         /// <summary>
         /// Checks if the passed HTML attribute contains a valid URL.
         /// </summary>
@@ -497,5 +515,10 @@ namespace Vereyon.Web
         /// Specifies that this attribute is allowed and that it's value is not to be checked.
         /// </summary>
         AllowAttribute,
+
+        /// <summary>
+        /// Allows base64 data content in attribute or valid URL.
+        /// </summary>
+        UrlOrBase64Data,
     }
 }
