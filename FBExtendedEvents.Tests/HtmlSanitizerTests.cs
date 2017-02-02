@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using NUnit.Framework;
 using Vereyon.Web;
 
@@ -95,6 +96,38 @@ namespace FBExtendedEvents.Tests
             // Arrange
             var html = @"<img src=""data:text/html,<script>alert('hi');</script>"" alt=""Red dot"" />";
             var expectedHtml = String.Empty;
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
+
+        [Test]
+        public void Sanitizer_ImageSourceWithEncodedUri_ImageSourceUriStaysEncoded()
+        {
+            // Arrange
+            var html = @"<img src=""https://server/Installer%20(Logging%20Tools)%20%5BRunning%5D%20-%20Oracle%20VM%20VirtualBox.png"" alt="""" />";
+            var expectedHtml = @"<img src=""https://server/Installer%20(Logging%20Tools)%20%5BRunning%5D%20-%20Oracle%20VM%20VirtualBox.png"" alt="""">";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
+
+        [Test]
+        public void Sanitizer_ImageSourceWithBasicUri_ImageSourceUriEncoded()
+        {
+            // Arrange
+            var html = @"<img src=""https://server/Installer Logging Tools - Oracle VM VirtualBox.png"" alt="""" />";
+            var expectedHtml = @"<img src=""https://server/Installer%20Logging%20Tools%20-%20Oracle%20VM%20VirtualBox.png"" alt="""">";
 
             var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
 
