@@ -43,6 +43,8 @@ namespace Vereyon.Web
         /// </summary>
         public bool WhiteListMode { get; set; }
 
+        public bool AllowCssClassAttribute { get; set; }
+
         /// <summary>
         /// Gets / sets if HTML entities in all text should be encoded.
         /// </summary>
@@ -52,6 +54,7 @@ namespace Vereyon.Web
         {
             WhiteListMode = true;
             EncodeHtmlEntities = true;
+            AllowCssClassAttribute = false;
             AllowedCssClasses = new List<string>();
             Rules = new Dictionary<string, HtmlSanitizerTagRule>();
             AttributeCheckRegistry = new Dictionary<HtmlSanitizerCheckType, IHtmlAttributeSanitizer>();
@@ -339,7 +342,7 @@ namespace Vereyon.Web
             
             // Apply global CSS class whitelist. If the attribute is complete removed, we are done.
             // TODO: Implement this as a global attribute check?
-            if (attribute.Name == "class")
+            if (attribute.Name == "class" && !this.AllowCssClassAttribute)
             {
                 if (!ApplyCssWhitelist(attribute))
                     return SanitizerOperation.DoNothing;
@@ -455,6 +458,7 @@ namespace Vereyon.Web
             var sanitizer = new HtmlSanitizer();
 
             sanitizer.WhiteListMode = true;
+            sanitizer.AllowCssClassAttribute = true;
             sanitizer.Tag("script").Remove();
             sanitizer.Tag("header").RemoveEmpty();
             sanitizer.Tag("h1").RemoveEmpty();

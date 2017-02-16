@@ -137,5 +137,37 @@ namespace FBExtendedEvents.Tests
             // Assert
             Assert.AreEqual(expectedHtml, actualHtml);
         }
+
+        [Test]
+        public void Sanitizer_AnchorWithClassAttribute_AllowClassAttribute()
+        {
+            // Arrange
+            var html = @"<a href=""http://example.org/"" class=""class1"">Link</a>";
+            var expectedHtml = @"<a href=""http://example.org/"" class=""class1"" target=""_blank"" rel=""nofollow"">Link</a>";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
+
+        [Test]
+        public void Sanitizer_ParaWithClassAttribute_AllowClassAttribute()
+        {
+            // Arrange
+            var html = @"<p class=""class1 class2"">text</p>";
+            var expectedHtml = @"<p class=""class1 class2"">text</p>";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            // Act
+            var actualHtml = sanitizer.Sanitize(html);
+
+            // Assert
+            Assert.AreEqual(expectedHtml, actualHtml);
+        }
     }
 }
