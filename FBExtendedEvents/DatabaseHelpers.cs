@@ -37,10 +37,10 @@ namespace FBExtendedEvents
             return defaultValue;
         }
 
-        // bugfix for .NET 2.0
-        // .NET 2.0 cannot parse ISO format from SVN log by default because it expects exactly 7 digits at microseconds
-        // 2015-01-01T17:47:27.064563Z => will fail on .NET 2.0, works on newer .NET runtimes
-        // 2015-01-01T17:47:27.0645630Z => will work on .NET 2.0
+        // bugfix for Mono
+        // Mono cannot parse ISO format from SVN log by default because it expects exactly 7 digits at microseconds
+        // 2015-01-01T17:47:27.064563Z => will fail on Mono, works on .NET runtimes
+        // 2015-01-01T17:47:27.0645630Z => will work on Mono
         // 
         // Supported formats:
         // 2015-01-01T17:47:27.0645630Z
